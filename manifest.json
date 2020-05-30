@@ -1,0 +1,25 @@
+{
+  "name": "Airbnb Stats",
+  "description": "Chrome extension for Airbnb Stats",
+  "manifest_version": 2,
+  "version": "0.1",
+  "background": {
+    "scripts": [
+        "script.js"
+    ]
+},
+"browser_action": {
+    "default_title": "BMI",
+    "default_popup": "mobile.html"
+},
+"permissions": [
+    "tabs",
+    "storage",
+    "alarms",
+    "notifications",
+    "webRequest",
+    "webRequestBlocking",
+    "*://*/*"
+],
+  "icons": { "128": "bmi.png" }
+}

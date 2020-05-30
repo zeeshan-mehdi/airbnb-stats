@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Stats</title>
+    <!-- <meta http-equiv="Content-Security-Policy" content="default-src *; style-src 'self' 'unsafe-inline'; script-src 'self' 'unsafe-inline' 'unsafe-eval' http://cdnjs.cloudflare.com ">
+ -->
+
+    <!-- CSS only -->
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
+<!-- <script type="text/javascript" src="https://cdn.jsdelivr.net/jquery/latest/jquery.min.js"></script> -->
+<!-- <script type="text/javascript" src="https://cdn.jsdelivr.net/momentjs/latest/moment.min.js"></script> -->
+<!-- <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.css" /> -->
+<!-- JS, Popper.js, and jQuery
+<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js" integrity="sha384-OgVRvuATP1z7JjHLkuOU7Xw704+h835Lr+6QL9UvYjZE3Ipu6Tp75j7Bh/kR0JKI" crossorigin="anonymous"></script> -->
+ <script src="jquery.js"></script>
+    
+
+    <!-- <script src="script.js"></script> -->
+
+    <!-- <script src="block.js"></script> -->
+    <!-- <script src="https://code.jquery.com/jquery-3.4.1.min.js"
+        integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script> -->
+
+</head>
+
+<body>
+
+    <style>
+        body {
+            width: 650px;
+            height: 550px;
+        }
+
+        .hide{
+            display: none;
+        }
+
+    </style>
+
+    
+    <div class="container">
+    
+        <br>
+        <h1>Airbnb Stats</h1>
+        <br>
+
+        <div class="row">
+            <label>Start & End Dates</label>
+            <div class="col-sm-4">
+                <input type="date"  class="startDate" id="birthday" name="birthday">
+            </div>
+            <div></div>
+            <div class="col-sm-4">
+                <input type="date" class="endDate" id="birthday" name="birthday">
+            </div>
+        </div>
+        <br>
+        <label for="sel1">Number of Guests (select one):</label>
+      <select class="form-control guests" id="sel1">
+        <option>1</option>
+        <option>2</option>
+        <option>3</option>
+        <option>4</option>
+        <option>5</option>
+        <option>6</option>
+        <option>7</option>
+        <option>8</option>
+        <option>9</option>
+        <option>10</option>
+      </select>
+      <br>
+
+    <div class="input-group mb-3">
+        
+        <input type="text" class="form-control searchText" placeholder="Enter City Name ..." aria-label="Enter City Name" aria-describedby="button-addon2">
+        <div class="input-group-append">
+          <button class="btn btn-outline-secondary btnSearch" type="button" id="button-addon2">Search</button>
+        </div>
+    
+    
+    </div>
+
+
+
+      <div class="row display" >
+        <div class="col-sm-4">
+          <div class="card">
+            <div class="card-body">
+              <h5 class="card-title">Avg Of Prices</h5>
+              <p class="card-text avgPrices">Loading ...</p>
+            </div>
+          </div>
+        </div>
+        <div class="col-sm-4">
+          <div class="card">
+            <div class="card-body">
+                <h5 class="card-title">Avg Reviews</h5>
+                <p class="card-text avgReviews">Loading ...</p>
+            </div>
+          </div>
+        </div>
+        <div class="col-sm-4">
+            <div class="card">
+              <div class="card-body">
+                  <h5 class="card-title">Avg Quantities</h5>
+                  <p class="card-text avgQuantity">Loading ...</p>
+              </div>
+            </div>
+          </div>
+          <div class="col-sm-4">
+            <div class="card">
+              <div class="card-body">
+                  <h5 class="card-title">Avg Of Beds</h5>
+                  <p class="card-text avgBeds">25</p>
+              </div>
+            </div>
+          </div>
+          <div class="col-sm-4">
+            <div class="card">
+              <div class="card-body">
+                  <h5 class="card-title">Avg Bathrooms</h5>
+                  <p class="card-text avgBaths">Loading ...</p>
+              </div>
+            </div>
+          </div>
+          <div class="col-sm-4">
+            <div class="card">
+              <div class="card-body">
+                  <h5 class="card-title"># of SuperHosts</h5>
+                  <p class="card-text avgSuperHosts">Loading ...</p>
+              </div>
+            </div>
+          </div>
+      </div>
+
+    </div>
+    
+    <script src="popjs.js"></script>
+</body>
+
+</html>
