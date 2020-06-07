@@ -1,57 +1,106 @@
 
+let users;
 var query = { active: true, currentWindow: true };
 let flag = false;
 let avgFinalPrice=avgFinalReviews=avgFinalQuantities=avgFinalBeds=avgFinalBaths=avgFinalSuperHosts=0;
-document.addEventListener('DOMContentLoaded', function () {
-    $('.display').hide();
-    chrome.tabs.query(query, callback);
+    
 
+
+
+chrome.runtime.onInstalled.addListener(function (details){
+    createAlarm();
 });
 
-function callback(tabs) {
-    $('.label').text('fetching results .....');
-    $('.spinner-border').show();
-    var url = tabs[0].url; 
-    // there will be only one in this array
-    if(url.includes('airbnb')&&url.includes('/s/'))
-        getWebsitecontent(url);
-    else if(!url.includes('airbnb')){
-        chrome.tabs.create({active: true, url: "https://www.airbnb.com/"});
-        $('.spinner-border').hide();
-        $('.label').text('please do search and open extension again');    
-    }else{
-        $('.spinner-border').hide();
-        $('.label').text('please do search and open extension again');
+function createAlarm() {
+    var now = new Date();
+    var day = now.getDate();
+    if (now.getHours() >= 10) {
+        // 3 AM already passed
+        day += 1;
     }
+    // '+' casts the date to a number, like [object Date].getTime();
+    var timestamp = +new Date(now.getFullYear(), now.getMonth(), day, 1, 50, 0, 0);
+    //                        YYYY               MM              DD  HH MM SS MS
+
+    // Create
+    chrome.alarms.create('3AMyet', {
+        delayInMinutes: 1,
+        periodInMinutes: 10080,
+
+    });
+}
+
+// Listen
+chrome.alarms.onAlarm.addListener(function(alarm) {
+    if (alarm.name === '3AMyet') {
+        console.log('alarm fired');
+        readDB();
+    }
+});
+
+
+
+
+function callback(email,url) {
+    // there will be only one in this array
+    if(url.includes('airbnb'))
+        getWebsitecontent(email,url);
+    else
+        console.log('not airbnb url');   
   }
 
 
-
-// $('.btnSearch').click(function () {
-
-//     let query = $('.searchText').val();
-
-//     let startDate = $('.startDate').val();
-//     let endDate = $('.endDate').val();
-//     let guests = $('.guests').val();
-//     let raw = query;
-
-//     //alert(startDate);
-
-//     if(query==null||query==''||startDate==null||endDate==null||guests==null){
-//         alert('please fill all feilds all are mandatory');
-//         return;
-//     }
-//     query = query.replace(/\s+/g, '-');
-
+function readDB() {
+    chrome.storage.sync.get(['key'], function (result) {
+        users = result.key;
+       
+        if(users==null)
+            return;
     
-
-
-//     getWebsitecontent(query,raw,startDate,endDate,guests);
+        for(let i =0;i<users.length;i++){
     
-// });
+            console.log(`users from background ${users[i].email}`);
+            callback(users[i].email,users[i].url,);
+            
+        }
+        if (users != null) {
+            console.log('not null from background');
+        }
+    
+    });
+}
 
-function getWebsitecontent(url) {
+
+function requestEmail(email,url) {
+    var params ={
+        'email':email,
+        'url':url,
+        'avgPrice':avgFinalPrice,
+        'avgBeds':avgFinalBeds,
+        'avgBaths':avgFinalBaths,
+        'avgRating':avgFinalReviews,
+        'avgQuantity':avgFinalQuantities,
+        'superHosts':avgFinalSuperHosts
+    }
+
+
+    let webUrl = 'https://bnb-sniper-pro.herokuapp.com/mail';
+
+    const req = new XMLHttpRequest();
+
+    req.open("POST", webUrl, true);
+    req.setRequestHeader("Content-type", "application/json");
+    req.send(JSON.stringify(params));
+
+    req.onreadystatechange = function() { // Call a function when the state changes.
+        if (this.readyState === XMLHttpRequest.DONE && this.status === 200) {
+            console.log(`respose is : ${this.responseText}`);
+        }
+    }
+    console.log(params);
+}
+
+function getWebsitecontent(email,url) {
 
     $.get(url, function (response) {
 
@@ -59,16 +108,16 @@ function getWebsitecontent(url) {
         getReviewsData(response);
         getAvgBeds(response);
 
-        getAvgSuperHosts(response);
+        getAvgSuperHosts(email,url,response);
 
     });
-    $('.display').show();
+    //$('.display').show();
 
 
     
 }
 
-function getAvgSuperHosts(response){
+function getAvgSuperHosts(email,url,response){
     
     let superHosts = $('._lwunzw', response);
 
@@ -82,7 +131,6 @@ function getAvgSuperHosts(response){
 
     avgFinalSuperHosts+=superHostCount;
 
-    $('.avgSuperHosts').text(avgFinalSuperHosts);
     console.log(`Total Number of super hosts are : ${superHostCount}`);
 
 
@@ -93,14 +141,21 @@ function getAvgSuperHosts(response){
 
     //console.log(($('a._1li8g8e',response)[0]).attr('href'));
 
-    if(!flag){
-    chrome.tabs.executeScript({
-        file: 'script.js'
-      },function (response) {
-          console.log('loaded');flag = true;
-          chrome.tabs.query(query, callback);
-      });
-    }
+    // if(!flag){
+    // chrome.tabs.executeScript({
+    //     file: 'script.js'
+    //   },function (response) {
+    //       console.log('loaded');flag = true;
+    //       chrome.tabs.query(query, callback2);
+    //   });
+    // }else{
+    // }
+
+    setTimeout(function () {
+        return requestEmail(email,url);
+    },1000)
+    
+    
 
     // console.log($('a._1li8g8e',response)[0]);
 }
@@ -119,8 +174,6 @@ function getAvgBeds(response) {
 
     let n=0;
 
-
-   
     $(beds).each(function (index) {
         
         let line = $(beds[index]).text();
@@ -154,22 +207,16 @@ function getAvgBeds(response) {
 
 
     if(!flag){
-        avgFinalBeds=noOfBeds;
-        avgFinalBaths=noOfBaths;
-        console.log(`round 1 beds : ${noOfBeds} & baths ${noOfBaths}`);
-        $('.label').text('20 Results Successfully Fetched ');
+        avgFinalBeds+=noOfBeds;
+        avgFinalBaths+=noOfBaths;
     }else{
-        console.log(`round 2 beds : ${noOfBeds} & baths ${noOfBaths}`);
-        avgFinalBeds=(avgFinalBeds+noOfBeds)/2;
-        avgFinalBaths= (avgFinalBaths+noOfBaths)/2;
-
-        console.log(`sum of 1 & 2 beds : ${avgFinalBeds} & baths ${avgFinalBaths}`);
+        
+        avgFinalBeds=avgFinalBeds+noOfBeds/2;
+        avgFinalBaths= avgFinalBaths+noOfBaths/2;
         avgFinalBeds = Math.round((avgFinalBeds + Number.EPSILON) * 100) / 100;
         avgFinalBaths = Math.round((avgFinalBaths + Number.EPSILON) * 100) / 100;
     }
 
-    $('.avgBeds').text(avgFinalBeds);
-    $('.avgBaths').text(avgFinalBaths);
     // console.log(`total beds : ${noOfBeds}`);
     // console.log(`total baths : ${noOfBaths}`);
 
@@ -187,30 +234,18 @@ function getAvgPrice(response) {
     let n = 0;
     $(prices).each(function (index) {
         let strPrice = $(prices[index]).text();
-        console.log(strPrice);
         strPrice = strPrice.match(/\d+/);
-
-        console.log(strPrice);
         sumOfPrices += parseInt(strPrice);
         n++;
     });
 
 
     sumOfPrices = Math.round((sumOfPrices / n + Number.EPSILON) * 100) / 100;
-    if(!flag){
-        avgFinalPrice =sumOfPrices;
-        console.log(`round 1 ${sumOfPrices}`);
-    }
-    else{
-
-
-        console.log(`round 2 ${sumOfPrices}`);
-        avgFinalPrice= avgFinalPrice +sumOfPrices;
-        console.log(`total sum of 1 & 2 ${avgFinalPrice}`);
-        avgFinalPrice= (Math.round((avgFinalPrice/2 + Number.EPSILON) * 100) / 100);
-        
-    }
-    $('.avgPrices').text(avgFinalPrice );
+    if(!flag)
+        avgFinalPrice +=sumOfPrices;
+    else
+    avgFinalPrice= Math.round(((avgFinalPrice +sumOfPrices)/2 + Number.EPSILON) * 100) / 100;
+   
 
     // console.log(`avg of prices   ${sumOfPrices / n}`);
 
@@ -245,30 +280,35 @@ function getReviewsData(response) {
 
 
     if(!flag){
-        
-        console.log(`round 1 reviewQuantity sum : ${reviewQuantitySum}`);
-
-        avgFinalQuantities=reviewQuantitySum;
+        avgFinalQuantities+=reviewQuantitySum;
     
-        avgFinalReviews =sum;
+        avgFinalReviews +=sum;
     }else{
-        console.log(`round 2 reviewQuantity sum : ${reviewQuantitySum}`);
-        avgFinalQuantities = avgFinalQuantities+reviewQuantitySum;
-        avgFinalQuantities= Math.round((avgFinalQuantities/2 + Number.EPSILON) * 100) / 100;
+        avgFinalQuantities= Math.round(((avgFinalQuantities+reviewQuantitySum)/2 + Number.EPSILON) * 100) / 100;
         //avgFinalQuantities= avgFinalQuantities+reviewQuantitySum/2;
     
-        avgFinalReviews = avgFinalReviews+sum;
-        avgFinalReviews= Math.round((avgFinalReviews/2 + Number.EPSILON) * 100) / 100;
+        avgFinalReviews= Math.round(((avgFinalReviews +sum)/2 + Number.EPSILON) * 100) / 100;
         
-        $('.label').text('40 Results Fetched Successfully ');
-        $('.spinner-border').hide();
+        ;
     }
-
-    
-    $('.avgQuantity').text(avgFinalQuantities );
-    $('.avgReviews').text(avgFinalReviews );
 
     // console.log(`sum ${sum}`);
     // console.log(`reviewQuantitySum ${reviewQuantitySum}`);
     // console.log(`review Average : ${sum / number}  review Quantity Avg : ${reviewQuantitySum / number}`);
 }
+
+
+
+
+
+function addNewUser(users) {
+    chrome.storage.sync.set({ key: users }, function () {
+        console.log('Value is set to ' + users);
+    });
+}
+
+
+
+
+
+

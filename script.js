@@ -1,3 +1,12 @@
+
+
+document.querySelector('a._1li8g8e').click();
+
+
+
+//$('a._1li8g8e',response)[0].click();
+
+
 // // var url = "http://anyorigin.com/go?url=" + encodeURIComponent("https://sfbay.craigslist.org/") +  "&callback=?";
 // // $.get(url, function(response) {
 // //   console.log(response);

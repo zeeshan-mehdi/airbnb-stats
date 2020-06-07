@@ -5,6 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    
     <title>Stats</title>
     <!-- <meta http-equiv="Content-Security-Policy" content="default-src *; style-src 'self' 'unsafe-inline'; script-src 'self' 'unsafe-inline' 'unsafe-eval' http://cdnjs.cloudflare.com ">
  -->
@@ -19,6 +20,7 @@
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js" integrity="sha384-OgVRvuATP1z7JjHLkuOU7Xw704+h835Lr+6QL9UvYjZE3Ipu6Tp75j7Bh/kR0JKI" crossorigin="anonymous"></script> -->
  <script src="jquery.js"></script>
     
+ <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 
     <!-- <script src="script.js"></script> -->
 
@@ -32,7 +34,7 @@
 
     <style>
         body {
-            width: 650px;
+            width: 700px;
             height: 550px;
         }
 
@@ -40,10 +42,55 @@
             display: none;
         }
 
+        /* Place the navbar at the bottom of the page, and make it stick */
+.navbar {
+  background-color: #333;
+  overflow: hidden;
+  position: fixed;
+  bottom: 0;
+  width: 100%;
+}
+
+/* Style the links inside the navigation bar */
+.navbar a {
+  float: left;
+  display: block;
+  color: #f2f2f2;
+  text-align: center;
+  padding: 14px 16px;
+  text-decoration: none;
+  font-size: 17px;
+}
+
+/* Change the color of links on hover */
+.navbar a:hover {
+  color: #FFF;
+  font-weight: bold;
+}
+
+/* Add a color to the active/current link */
+.navbar a.active {
+  height: 100%;
+  color: #FFF;
+  font-weight: bold;
+}
+
+.containerb{
+    margin: auto 10px;
+}
+
+.label{
+    margin: auto 25%;
+}
+
     </style>
 
     
-    <div class="container">
+<br>
+<div class="containerb">
+<img src="bmi.jpeg" style="width: 250px;height: 150px; margin: auto 30%;"/>
+<br>
+    <!-- <div class="container">
     
         <br>
         <h1>Airbnb Stats</h1>
@@ -83,62 +130,68 @@
         </div>
     
     
+    </div> -->
+
+    <div class="label"></div>
+
+    <div class="text-center">
+
+    <div class="spinner-border display" role="status">
+        <span class="sr-only">Loading...</span>
+      </div>
     </div>
-
-
-
       <div class="row display" >
         <div class="col-sm-4">
-          <div class="card">
             <div class="card-body">
-              <h5 class="card-title">Avg Of Prices</h5>
-              <p class="card-text avgPrices">Loading ...</p>
+              <h6 class="card-title">Average Of Prices</h6>
+              <i class="fa fa-google-wallet"></i>
+              <p class="card-text avgPrices"></p>
             </div>
-          </div>
         </div>
         <div class="col-sm-4">
-          <div class="card">
             <div class="card-body">
-                <h5 class="card-title">Avg Reviews</h5>
-                <p class="card-text avgReviews">Loading ...</p>
+                <h6 class="card-title">Average of Reviews</h6>
+                <i class="fa fa-star"></i>
+                <p class="card-text avgReviews"></p>
             </div>
-          </div>
         </div>
         <div class="col-sm-4">
-            <div class="card">
               <div class="card-body">
-                  <h5 class="card-title">Avg Quantities</h5>
-                  <p class="card-text avgQuantity">Loading ...</p>
+                  <h6 class="card-title">Average of Review Quantities</h6>
+                  <i class="fa fa-users"></i>
+                  <p class="card-text avgQuantity"></p>
               </div>
-            </div>
           </div>
           <div class="col-sm-4">
-            <div class="card">
               <div class="card-body">
-                  <h5 class="card-title">Avg Of Beds</h5>
-                  <p class="card-text avgBeds">25</p>
+                  <h6 class="card-title">Average Of Beds</h6>
+                  <i class="fa fa-bed"></i>
+                  <p class="card-text avgBeds"></p>
               </div>
-            </div>
           </div>
           <div class="col-sm-4">
-            <div class="card">
               <div class="card-body">
-                  <h5 class="card-title">Avg Bathrooms</h5>
-                  <p class="card-text avgBaths">Loading ...</p>
+                  <h6 class="card-title">Average  Bathrooms</h6>
+                  <i class="fa fa-bath"></i>
+                  <p class="card-text avgBaths"></p>
               </div>
-            </div>
           </div>
           <div class="col-sm-4">
-            <div class="card">
               <div class="card-body">
-                  <h5 class="card-title"># of SuperHosts</h5>
-                  <p class="card-text avgSuperHosts">Loading ...</p>
+                  <h6 class="card-title">Number of SuperHosts</h6>
+                  <img src="superhost.png" width="30px" height="30px" >
+                  <p class="card-text avgSuperHosts"></p>
               </div>
-            </div>
           </div>
       </div>
+     
 
     </div>
+    <div class="navbar">
+        <a href="mobile.html" class="active">Home</a>
+        <a href="reports.html">Reports</a>
+      </div>
+</div>
     
     <script src="popjs.js"></script>
 </body>

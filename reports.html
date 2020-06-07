@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="jquery.js"></script>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
+</head>
+
+<body>
+
+    <style>
+        body {
+            width: 650px;
+            height: 550px;
+        }
+
+        .hide{
+            display: none;
+        }
+
+        /* Place the navbar at the bottom of the page, and make it stick */
+.navbar {
+  background-color: #333;
+  overflow: hidden;
+  position: fixed;
+  bottom: 0;
+  width: 100%;
+}
+
+/* Style the links inside the navigation bar */
+.navbar a {
+  float: left;
+  display: block;
+  color: #f2f2f2;
+  text-align: center;
+  padding: 14px 16px;
+  text-decoration: none;
+  font-size: 17px;
+}
+
+/* Change the color of links on hover */
+.navbar a:hover {
+  color: #FFF;
+  font-weight: bold;
+}
+
+.hide{
+  display: none;
+  margin: auto 5%;
+}
+
+/* Add a color to the active/current link */
+.navbar a.active {
+  height: 100%;
+  color: #FFF;
+  font-weight: bold;
+}
+
+    </style>
+    <div class="container">
+    <h1>Reports </h1>
+    
+    
+    <br>
+    <div class="label"></div>
+    <h3>Get Weekly Reports at your email address for any Airbnb url specified</h3>
+
+    <input type="text" class="form-control searchText mb-2 mt-3 email" placeholder="Enter email" aria-label="Enter email" aria-describedby="button-addon2">
+        <!-- <input type="text" class="form-control searchText mb-2 url" placeholder="Enter Url" aria-label="Enter Url" aria-describedby="button-addon2"> -->
+
+    <!-- <div class="input-group mb-3">
+        
+        
+        <div class="input-group-append"> -->
+          <button class="btn btn-outline-secondary subscribe mt-3" type="button" id="button-addon2">Subscribe</button>
+        <!-- </div>
+    
+          
+    
+    </div> -->
+
+    </div>
+    <br>
+    <h3 class="hide">You have successfully Subscribed for Weekly Report</h3>
+
+
+    <div class="navbar">
+        <a href="mobile.html" >Home</a>
+        <a href="reports.html" class="active">Reports</a>
+      </div>
+
+      <script src="reports.js"></script>
+</body>
+</html>
